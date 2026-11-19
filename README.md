@@ -1,27 +1,21 @@
-# Pixel Defenders — prototype
+# PIXEL DEFENDERS
 
-## Run
-Open `index.html` in a modern browser. No build step or external libraries are required.
+HTML5 Tower Defense (Canvas 2D). Открывается двойным щелчком по `index.html`, сервер и сборка не нужны.
 
-## Controls
-- Select Archer or Mage.
-- Tap/click an empty grass tile to place a tower.
-- Select a placed tower and press Upgrade.
-- Press Start Wave.
-- Towers automatically target enemies near the path.
+## Состояние (этапы 1–3 завершены)
+- Код разбит на модули в `js/` (классические скрипты, общий объект `PD`, без `import/export`).
+- Исправлено: выбор цели по пройденной дистанции, босс ровно один на волне (волны 10 и 15), снаряды и враги берутся из пулов, сохранение в `localStorage`.
+- Строить, улучшать и продавать башни можно и во время волны.
+- Графика: оригинальный пиксель-арт, генерируется кодом (`python3 tools/build_sprites.py` → `assets/sprites/atlas.png` + `atlas.js`). В атласе 6 башен × 3 уровня (покой и атака), 10 врагов с анимацией ходьбы в обе стороны, снаряды, эффекты, тайлы и декор. Обзор: `docs/sprite_sheet_preview.png`.
+- В игре пока играбельны лучница и маг, слизень и босс; остальные башни и враги нарисованы и ждут подключения в данные (этап 6).
+- Деревья и камни блокируют постройку башен (новое).
 
-## Current prototype
-- Canvas-based pixel-style rendering
-- Two tower types and three upgrade levels
-- Enemy waves, boss waves, coins and lives
-- Mouse and touch input
+## Управление
+Выбрать башню кнопкой → нажать на свободную клетку травы. Нажать на башню — выбрать её (кнопки «Улучшить»/«Продать»). Кнопки: «Начать волну», пауза, скорость 1x/2x/3x, «Заново».
 
-## Next development steps
-1. Replace placeholder shapes with original pixel-art sprites and animations.
-2. Add multiple maps, tower targeting priorities and more enemy classes.
-3. Add sound, settings, tutorials and save data.
-4. Integrate the official Yandex Games SDK and test ad calls only after explicit player actions / suitable breaks.
-5. Test on mobile and desktop, then prepare the Yandex Games draft.
-
-Yandex Games SDK is required for publication. Review the current official documentation before release:
-https://yandex.com/dev/games/doc/en/sdk
+## Проверки
+```
+node tools/sim.test.js     # логика: бой, боссы, сохранения, пауза/скорость
+python3 tools/smoke.py     # настоящий Chromium (нужен playwright), десктоп и телефон
+```
+Исходный прототип сохранён в `docs/prototype/index.html`. Навыки Claude Code: `SKILLS.md`.
